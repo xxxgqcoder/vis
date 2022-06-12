@@ -44,27 +44,6 @@ def path_last_folder(p):
     return os.path.basename(os.path.normpath(p))
 
 
-def process_home_page(args):
-    # adding html pages and directory in `args.pages_root_dir`
-    siblings = os.listdir(args.pages_root_dir)
-    rel_pages_dir = path_last_folder(args.pages_root_dir)
-
-    # trim directory prefix if necessary
-    siblings = [os.path.join('/', rel_pages_dir, trim_prefix(args.pages_root_dir, p)) for p in siblings if page_filter(args.pages_root_dir, p)]
-    
-    rel_home_page = os.path.basename(args.home_page)
-    with open(os.path.join(args.work_dir, rel_home_page)) as f:
-        content = f.read()
-        data = {
-            "context": {
-                "siblings": sorted(siblings),
-            },
-        }
-        j2_template = Template(content)
-        with open(os.path.join(args.out_root_dir, rel_home_page), 'w') as out:
-            out.write(j2_template.render(data))
-
-
 def process_pages(args):
     def dir_hanlder(pages_root_dir, root, dirs, files):
         root = trim_prefix(pages_root_dir, root)
@@ -92,8 +71,8 @@ def process_pages(args):
 
     for root, dirs, files in os.walk(args.pages_root_dir, topdown=True):
         files = [f for f in files if page_filter(root, f)]
+        print(f'processing directory: {root}')
         dir_hanlder(args.pages_root_dir, root, dirs, files)
-        print("*****************")
 
 
 def process(args):
