@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>visualization home</title>
+    <script src="js/d3.v7.min.js"></script>
+    <script src="js/cytoscape.min.js"></script>
+  </head>
+  <body>
+    <div>
+      {{ context.current_path }}
+    </div>
+    <div>
+      {% for p in context.siblings %}
+      <li> <a href="{{ p }}"> {{ p }}</a></li>
+      {% endfor %}
+    </div>
+  </body>
+</html>

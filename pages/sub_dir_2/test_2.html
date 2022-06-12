@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <title>visualization home</title>
+  </head>
+  <body>
+    <div>
+      {% for p in context.siblings %}
+      <li> <a href="{{ p }}"> {{ p }}</a></li>
+      {% endfor %}
+    </div>
+  </body>
+</html>
